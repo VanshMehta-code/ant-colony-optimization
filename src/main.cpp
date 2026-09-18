@@ -1,29 +1,9 @@
 #include "../include/aco_math.h"
-#include <cstddef>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <raylib.h>
 
-Vector2 QuadBezier(Vector2 a, Vector2 b, Vector2 c, float t) {
-  float u = 1.0f - t;
-  Vector2 p;
-  p.x = u * u * a.x + 2 * u * t * b.x + t * t * c.x;
-  p.y = u * u * a.y + 2 * u * t * b.y + t * t * c.y;
-  return p;
-}
-
-// Draws n triangles approximating the curve A -> B -> C
-void DrawCurveTriangles(Vector2 a, Vector2 b, Vector2 c, int n, Color color) {
-  Vector2 prev = QuadBezier(a, b, c, 0.0f); // = a
-  for (int i = 1; i <= n; i++) {
-    float t = (float)i / (float)n;
-    Vector2 curr = QuadBezier(a, b, c, t);
-    DrawTriangle(a, prev, curr, color); // fan from a
-    prev = curr;
-  }
-}
-void DrawSomething() { DrawCircle(10, 100, 3, GRAY); }
 int main() {
   srand(time(0));
   float evaporationRate = 0.2;
@@ -50,8 +30,8 @@ int main() {
     BeginDrawing();
     ClearBackground(WHITE);
     DrawText("ACO", 370, 10, 30, GRAY);
-    DrawSomething();
     DrawText(TextFormat("Iteration: %4i", iter), 10, 30, 15, GRAY);
+    DrawText(TextFormat("Total Ants: %4i", ants), 10, 50, 15, GRAY);
     DrawText(TextFormat("Probablity Route 1: %.4f", probablity[0]), 10, 70, 10,
              GRAY);
     DrawText(TextFormat("Distance Route 1: %.4f", distance[0]), 10, 80, 10,
@@ -60,27 +40,25 @@ int main() {
              GRAY);
     DrawText(TextFormat("Distance Route 2: %4f", distance[1]), 10, 100, 10,
              GRAY);
-    if (i % 60 < 3) {
+    if (i % 60 < 10) {
       if (i % 30 == 0) {
         ants++;
+        probablity[0] = aco_probablity(probablity[0], distance[0], distance[1],
+                                       evaporationRate);
+        probablity[1] = 1 - probablity[0];
       }
       if (ants >= totalAnts) {
         ants = 0;
         iter++;
-        probablity[0] = aco_probablity(probablity[0], distance[0], distance[1],
-                                       evaporationRate);
-        probablity[1] = 1 - probablity[0];
         antsToOne = (int)(probablity[0] * totalAnts);
         antsToTwo = (int)(probablity[1] * totalAnts);
-        DrawCurveTriangles(arr[0], arr[2], arr[1], antsToOne, RED);
-        DrawCurveTriangles(arr[0], arr[3], arr[1], antsToTwo, RED);
       }
-      if ((int)(probablity[0] * totalAnts) < ants) {
-        // DrawLineV(arr[0], arr[2], RED);
-        // DrawLineV(arr[2], arr[1], RED);
+      if (antsToOne < ants) {
+        DrawLineV(arr[0], arr[3], RED);
+        DrawLineV(arr[3], arr[1], RED);
       } else {
-        // DrawLineV(arr[0], arr[3], RED);
-        // DrawLineV(arr[3], arr[1], RED);
+        DrawLineV(arr[0], arr[2], RED);
+        DrawLineV(arr[2], arr[1], RED);
       }
     }
     DrawCircleV(arr[0], 10, GRAY);
