@@ -4,7 +4,7 @@ add_executable(aco-project)
 target_sources(aco-project 
   PRIVATE 
     src/main.cpp 
-    src/math.c
+    src/aco_math.c
   PUBLIC
   FILE_SET headers
   TYPE HEADERS

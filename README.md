@@ -3,14 +3,26 @@
 ## Basic Implementation
 - **Language** : C++ (Visualization), C (Math)
 > [!NOTE]
-> This is a basic implementation,for now it is just about getting seeing the probablity of the routes.
-> It is mainly about getting the basics right rather than full implementation.
+> This is a basic TSP implementation that would give us the optimal path through certain iteration.
+> This implementation is just a learning project.
 
 - So now basic implementation carries simple and easy work to be done,
-    - [X] Make the Window open and close.
-    - [X] Write the heading, FPS, and the number of iteration.
-    - [X] Draw up two circles in the screen randomly.
-    - [X] Get two more coordinates randomly to make the path.
-    - [X] Get the distance of the two paths that are created.
-    - [X] Use the formula and calculate the normal probablity of path with one iteration.
-    - [X] Run that iteration many times and see what path is been selected.
+    - [X] Make the Window open and close(C++).
+    - [X] Write the heading and FPS(C++).
+    - [X] Take input n from the user for the number of nodes(C++).
+    - [X] Take input l for number of ants(C++).
+    - [X] Make a function for making random numbers(C).
+    - [X] Make N random Vector2 nodes(C).
+    - [X] Draw the N random Vector2 on the screen(C++).
+    - [X] Make a distance formula to find the distance between 2 points(C).
+    - [X] Get a distance matrix for each point pair(C).
+    - [X] Get ants and the iteration variable(C++).
+    - [ ] Get a random path for one ant(C)
+    - [ ] Make 1 ant walk randomly on the map (C++).
+    - [ ] Calculate the distance of the walk (C).
+    - [ ] Make the probablity matrix for the map (C++).
+    - [ ] Make the probablity counting matrix (C).
+    - [ ] Update the probablity of the map (C++).
+    - [ ] Make many ants and leave them map (C++).
+    - [ ] Make them move randomly together (C++).
+    - [ ] Make many iterations for each ant and see the path taken by ants (C++).
