@@ -1,7 +1,6 @@
 #include "../include/aco_math.h"
 #include <cstdlib>
 #include <ctime>
-#include <iostream>
 #include <raylib.h>
 
 int main() {
@@ -15,8 +14,6 @@ int main() {
   }
   float distance[2] = {(dist(arr[0], arr[2])) + (dist(arr[2], arr[1])),
                        (dist(arr[0], arr[3])) + (dist(arr[3], arr[1]))};
-  std::cout << "Distance 1: " << distance[0] << " Distance 2: " << distance[1]
-            << '\n';
   bool isSmallOne = distance[0] < distance[1];
   float probablity[2] = {0.5, 0.5};
   InitWindow(800, 600, "ACO");
