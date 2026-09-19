@@ -1,1 +1,0 @@
-/usr/bin/c++ "CMakeFiles/aco-project.dir/src/main.cpp.o" "CMakeFiles/aco-project.dir/src/math.c.o" -o aco-project  -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 

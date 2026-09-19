@@ -1,3 +1,0 @@
-/home/vector/MySpace/Projects/aco-project/build/CMakeFiles/aco-project.dir
-/home/vector/MySpace/Projects/aco-project/build/CMakeFiles/edit_cache.dir
-/home/vector/MySpace/Projects/aco-project/build/CMakeFiles/rebuild_cache.dir
