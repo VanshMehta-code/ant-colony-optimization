@@ -17,12 +17,13 @@
     - [X] Make a distance formula to find the distance between 2 points(C).
     - [X] Get a distance matrix for each point pair(C).
     - [X] Get ants and the iteration variable(C++).
-    - [ ] Get a random path for one ant(C)
-    - [ ] Make 1 ant walk randomly on the map (C++).
-    - [ ] Calculate the distance of the walk (C).
-    - [ ] Make the probablity matrix for the map (C++).
-    - [ ] Make the probablity counting matrix (C).
-    - [ ] Update the probablity of the map (C++).
-    - [ ] Make many ants and leave them map (C++).
-    - [ ] Make them move randomly together (C++).
-    - [ ] Make many iterations for each ant and see the path taken by ants (C++).
+    - [X] Make a markov chain for getting the next node(C).
+    - [X] Get a random path for one ant(C).
+    - [X] Make 1 ant walk randomly on the map (C++).
+    - [X] Calculate the distance of the walk (C).
+    - [X] Make the probablity matrix for the map (C).
+    - [X] Update the probablity of the map (C++).
+    - [X] Make many ants and leave them map (C++).
+    - [X] Make them move randomly together (C++).
+    - [X] Make many iterations for each ant and see the path taken by ants (C++).
+

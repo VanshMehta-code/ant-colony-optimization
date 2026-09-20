@@ -1,9 +1,9 @@
 #include "../include/aco_math.h"
 #include <math.h>
 #include <raylib.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 
 int randomInt(int lowerLimit, int upperLimit) {
   return (rand() % (upperLimit - lowerLimit) + lowerLimit);
@@ -23,7 +23,6 @@ float dist(Vector2 vec1, Vector2 vec2) {
 }
 
 Vector2 *getNVector(GraphBound bounding, int n, float thresholdDistance) {
-  srand(time(0));
   Vector2 *vecArray = malloc(n * sizeof(Vector2));
   for (int i = 0; i < n; i++) {
     bool isValid = true;
@@ -61,4 +60,105 @@ float *getDistanceMatrix(int n, Vector2 *vecArr) {
     }
   }
   return distanceMatrix;
+}
+
+float *getInitialProbMatrix(int n) {
+  float initialProb = (float)1 / (n - 1);
+  float *initialProbMatrix = malloc(n * n * sizeof(float));
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      int idx = getIndex(n, i, j);
+      initialProbMatrix[idx] = initialProb * (i != j);
+    }
+  }
+  return initialProbMatrix;
+}
+
+int getNextNode(int n, float *probablityArray) {
+  float currentProbablity = 0.0;
+  float randomFloat = rand() % 100;
+  randomFloat /= 100;
+  int i = 0;
+  for (; i < n; i++) {
+    if (probablityArray[i] == 0) {
+      continue;
+    }
+    currentProbablity += probablityArray[i];
+    if (randomFloat < currentProbablity) {
+      break;
+    }
+  }
+  return i;
+}
+
+int *getPath(int n, float *probablityMatrix) {
+  int *path = malloc(n * sizeof(int));
+  float *probablityArray = malloc(n * sizeof(float));
+  for (int i = 0;; i++) {
+    if (i == 0) {
+      path[i] = rand() % n;
+      continue;
+    }
+    float lastIdx = -1;
+    for (int j = 0; j < n; j++) {
+      bool isValid = true;
+      for (int k = 0; k < i; k++) {
+        if (path[k] == j) {
+          isValid = false;
+        }
+      }
+      int idx = getIndex(n, path[i - 1], j);
+      float probA = probablityMatrix[idx] * isValid;
+      if (probA != 0 && i + 1 == n) {
+        lastIdx = j;
+        break;
+      }
+      probablityArray[j] = probA;
+    }
+    if (lastIdx != -1) {
+      path[i] = lastIdx;
+      break;
+    } else {
+      do {
+        path[i] = getNextNode(n, probablityArray);
+      } while (path[i] == n);
+    }
+  }
+  free(probablityArray);
+  return path;
+}
+
+float getDistance(int n, int *path, float *distanceMatrix) {
+  float distance = 0.0;
+  for (int i = 0; i < n; i++) {
+    int idx = getIndex(n, path[i], path[(i + 1) % n]);
+    distance += distanceMatrix[idx];
+  }
+  return distance;
+}
+
+void updateProbablityMatrix(int n, float p, float distance, int *path,
+                            float *probablityMatrix) {
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      int idx = getIndex(n, i, j);
+      probablityMatrix[idx] *= (1 - p);
+    }
+  }
+  float heauristic = 100 / distance;
+  for (int i = 0; i < n; i++) {
+    int idx = getIndex(n, path[i], path[(i + 1) % n]);
+    probablityMatrix[idx] += heauristic;
+  }
+  for (int i = 0; i < n; i++) {
+    float total = 0.0;
+    for (int j = 0; j < n; j++) {
+      int idx = getIndex(n, i, j);
+      total += probablityMatrix[idx];
+    }
+    for (int j = 0; j < n; j++) {
+      int idx = getIndex(n, i, j);
+      probablityMatrix[idx] /= total;
+    }
+  }
 }

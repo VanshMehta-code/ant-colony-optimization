@@ -17,6 +17,11 @@ int getIndex(int n, int i, int j);
 inline int getIthIndex(int n, int idx);
 inline int getJthIndex(int n, int idx);
 float *getDistanceMatrix(int n, Vector2 *vecArr);
+float *getInitialProbMatrix(int n);
+int *getPath(int n, float *probablityMatrix);
+float getDistance(int n, int *path, float *distanceMatrix);
+void updateProbablityMatrix(int n, float p, float distance, int *path,
+                            float *probablityMatrix);
 #ifdef __cplusplus
 }
 #endif // __cplusplus
